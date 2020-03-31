@@ -7,6 +7,10 @@ But how do you share something to the web thats not crazy long (sorry uuid, you 
 Well you generate a token / "hash" / random string and use that as something that is unique to link to the entity you want to find.
 
 ```
+$generator = new StringOfFormat(4, 'ab');
+$this->assertRegExp('/[ab]{4}/', $generator->generate());
+
+
 $string = RandomStringGenerator::randomString(16);
 echo $string;
 // vuHlvV9NTCwBbIxa
@@ -29,8 +33,8 @@ https://www.quora.com/Cryptography-What-is-the-smallest-prefix-length-of-an-SHA1
 https://github.com/source-foundry/font-v/issues/2
 https://emn178.github.io/online-tools/shake_256.html
 http://www.getsolid.io/blog/birthday-paradox-coding-solid/
-
 https://blog.codinghorror.com/url-shortening-hashes-in-practice/
+https://medium.com/ingeniouslysimple/why-did-we-shift-away-from-database-generated-ids-7e0e54a49bb3
 
-
+### Future:
 https://symfony.com/doc/current/components/string.html
