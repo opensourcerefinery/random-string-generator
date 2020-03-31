@@ -6,32 +6,35 @@ use PHPUnit\Framework\TestCase;
 
 final class RandomStringGeneratorTest extends TestCase
 {
-    protected function consoleWrite($var)
+    public function test_it_should_not_allow_length_lower_than_one(): void
     {
-        fwrite(STDERR, print_r($var, true)."\r\n");
+        $this->expectException(\RangeException::class);
+        $this->expectExceptionMessage('Length must be a positive integer, "0" given.');
+        RandomStringGenerator::randomString(0);
     }
 
-    public function test_it_should_return_value_when_invoked(): void
+    /**
+     * @param int $length
+     * @param string $keyspace
+     * @param string $pattern
+     * @dataProvider provideSupportedLength
+     */
+    public function test_it_should_generate_string_of_length_with_keyspace(int $length, string $keyspace, string $pattern): void
     {
-        $characterSet = RandomStringGenerator::ALPHA_LOWER.RandomStringGenerator::NUMBERS;
-        $string = RandomStringGenerator::randomString(1, $characterSet);
-        $this->consoleWrite($string);
-        $this->assertEquals(1, \strlen($string));
-        
-
-        $string = RandomStringGenerator::randomString(16);
-        $this->consoleWrite($string);
-        $this->assertEquals(16, \strlen($string));
-        
-
-        $string = RandomStringGenerator::randomString(32);
-        $this->consoleWrite($string);
-        $this->assertEquals(32, \strlen($string));
-        
-
-        $string = RandomStringGenerator::randomString(64);
-        $this->consoleWrite($string);
-        $this->assertEquals(64, \strlen($string));
-        
+        $string = RandomStringGenerator::randomString($length, $keyspace);
+        $this->assertSame($length, \strlen($string));
+        $this->assertRegExp($pattern, $string);
     }
+
+    public static function provideSupportedLength(): array
+    {
+        return [
+            [1, 'one', '/[one]{1}/'],
+            [16, 'sixteen', '/[sixteen]{16}/'],
+            [32, 'thirtytwo', '/[thirtytwo]{32}/'],
+            [64, 'sixtyfour', '/[sixtyfour]{64}/'],
+        ];
+    }
+
+
 }
