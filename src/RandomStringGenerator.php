@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace OpenSourceRefinery\Component\RandomStringGenerator;
 
@@ -11,24 +11,25 @@ namespace OpenSourceRefinery\Component\RandomStringGenerator;
  */
 class RandomStringGenerator
 {
-
     const ALPHA_LOWER = 'abcdefghijklmnopqrstuvwxyz';
     const ALPHA_UPPER = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     const NUMBERS = '0123456789';
-    const KEYSPACE_DEFAULT = self::NUMBERS.self::ALPHA_LOWER.self::ALPHA_UPPER;
+    const KEYSPACE_DEFAULT = self::NUMBERS . self::ALPHA_LOWER . self::ALPHA_UPPER;
 
     public static function randomString(
         int $length = 64,
         string $keyspace = self::KEYSPACE_DEFAULT
     ): string {
         if ($length < 1) {
-            throw new \RangeException("Length must be a positive integer");
+            throw new \RangeException(\sprintf('Length must be a positive integer, "%s" given.', $length));
         }
+
         $pieces = [];
-        $max = mb_strlen($keyspace, '8bit') - 1;
+        $max = \mb_strlen($keyspace, '8bit') - 1;
         for ($i = 0; $i < $length; ++$i) {
-            $pieces []= $keyspace[random_int(0, $max)];
+            $pieces[]= $keyspace[\random_int(0, $max)];
         }
-        return implode('', $pieces);
+
+        return \implode('', $pieces);
     }
 }
