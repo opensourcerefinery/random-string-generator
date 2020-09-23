@@ -17,7 +17,7 @@ echo $string;
 ```
 
 
-### Pulled from, Citiations (and Thanks to):
+### Pulled from, Citations (and Thanks to):
 https://stackoverflow.com/questions/1846202/php-how-to-generate-a-random-unique-alphanumeric-string
 https://stackoverflow.com/questions/7493102/how-to-output-in-cli-during-execution-of-php-unit-tests
 https://gnugat.github.io/2018/06/15/short-identifier.html
